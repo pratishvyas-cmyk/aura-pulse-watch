@@ -11,60 +11,67 @@
 @layer base {
   /* ─────────────── LIGHT MODE ─────────────── */
   :root {
-    --background:      214 22% 92%;
-    --surface:         214 20% 98%;
-    --surface-raised:  214 18% 96%;
-    --border:          214 16% 83%;
+    --background:      210 40% 96%;
+    --surface:         0 0% 100%;
+    --surface-raised:  210 30% 98%;
+    --border:          210 30% 86%;
 
-    --foreground:      214 40% 8%;
-    --text-secondary:  214 14% 36%;
-    --text-muted:      214  8% 54%;
+    --foreground:      214 60% 10%;
+    --text-secondary:  214 25% 35%;
+    --text-muted:      214 15% 55%;
 
-    --primary:         210 100% 48%;
+    --primary:         210 100% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-dim:     210 100% 90%;
+    --primary-dim:     210 100% 93%;
 
-    --teal:            188 100% 38%;
-    --teal-dim:        188 80% 90%;
+    --teal:            188 100% 36%;
+    --teal-dim:        188 80% 92%;
 
-    --gold:            38 100% 50%;
-    --gold-dim:        38 100% 90%;
+    --gold:            38 100% 48%;
+    --gold-dim:        38 100% 92%;
 
-    --status-green:    142 70% 36%;
-    --status-amber:    38  100% 46%;
-    --status-red:      0   85% 54%;
+    --status-green:    142 72% 32%;
+    --status-amber:    38  100% 44%;
+    --status-red:      0   88% 52%;
 
-    --card:               214 20% 98%;
-    --card-foreground:    214 40% 8%;
-    --popover:            214 20% 98%;
-    --popover-foreground: 214 40% 8%;
-    --secondary:          214 18% 95%;
-    --secondary-foreground: 214 40% 8%;
-    --muted:              214 18% 95%;
-    --muted-foreground:   214 14% 36%;
-    --accent:             210 100% 90%;
-    --accent-foreground:  214 40% 8%;
-    --destructive:        0 85% 50%;
+    --card:               0 0% 100%;
+    --card-foreground:    214 60% 10%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 214 60% 10%;
+    --secondary:          210 40% 94%;
+    --secondary-foreground: 214 60% 10%;
+    --muted:              210 35% 94%;
+    --muted-foreground:   214 25% 35%;
+    --accent:             210 100% 93%;
+    --accent-foreground:  214 60% 10%;
+    --destructive:        0 88% 50%;
     --destructive-foreground: 0 0% 100%;
-    --input:              214 16% 83%;
-    --ring:               210 100% 48%;
+    --input:              210 30% 86%;
+    --ring:               210 100% 45%;
     --radius:             0.75rem;
 
-    --sidebar-background:          214 20% 98%;
-    --sidebar-foreground:          214 40% 8%;
-    --sidebar-primary:             210 100% 48%;
+    --sidebar-background:          0 0% 100%;
+    --sidebar-foreground:          214 60% 10%;
+    --sidebar-primary:             210 100% 45%;
     --sidebar-primary-foreground:  0 0% 100%;
-    --sidebar-accent:              210 100% 90%;
-    --sidebar-accent-foreground:   214 40% 8%;
-    --sidebar-border:              214 16% 83%;
-    --sidebar-ring:                210 100% 48%;
+    --sidebar-accent:              210 100% 93%;
+    --sidebar-accent-foreground:   214 60% 10%;
+    --sidebar-border:              210 30% 86%;
+    --sidebar-ring:                210 100% 45%;
 
-    --gradient-hero:    linear-gradient(160deg, hsl(210 100% 48% / 0.1) 0%, transparent 60%);
-    --gradient-bg:      linear-gradient(145deg, hsl(214 30% 89%) 0%, hsl(210 35% 92%) 50%, hsl(200 28% 90%) 100%);
-    --shadow-glow-teal: 0 0 32px hsl(188 100% 38% / 0.35), 0 0 8px hsl(188 100% 38% / 0.22);
-    --shadow-glow-gold: 0 0 28px hsl(38 100% 50% / 0.45), 0 0 10px hsl(38 100% 50% / 0.30);
-    --shadow-glow-blue: 0 0 36px hsl(210 100% 48% / 0.40), 0 0 12px hsl(210 100% 48% / 0.25);
-    --shadow-card:      0 2px 8px hsl(214 20% 20% / 0.10), 0 8px 32px hsl(214 20% 20% / 0.08), 0 0 0 1px hsl(214 16% 83% / 0.7);
+    --gradient-hero:    linear-gradient(160deg, hsl(210 100% 45% / 0.12) 0%, transparent 60%);
+    --gradient-bg:      linear-gradient(
+                          150deg,
+                          hsl(0 0% 100%)        0%,
+                          hsl(210 60% 96%)     25%,
+                          hsl(210 80% 92%)     50%,
+                          hsl(215 70% 94%)     75%,
+                          hsl(0 0% 100%)      100%
+                        );
+    --shadow-glow-teal: 0 0 32px hsl(188 100% 36% / 0.30), 0 0 8px hsl(188 100% 36% / 0.18);
+    --shadow-glow-gold: 0 0 28px hsl(38 100% 48% / 0.40), 0 0 10px hsl(38 100% 48% / 0.25);
+    --shadow-glow-blue: 0 0 36px hsl(210 100% 45% / 0.35), 0 0 12px hsl(210 100% 45% / 0.20);
+    --shadow-card:      0 2px 12px hsl(210 40% 20% / 0.08), 0 8px 32px hsl(210 40% 20% / 0.06), 0 0 0 1px hsl(210 30% 86% / 0.8);
   }
 
   /* ─────────────── DARK MODE — Deep Navy + Vivid Blue + Gold ─────────────── */
