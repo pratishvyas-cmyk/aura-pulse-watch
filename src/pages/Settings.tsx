@@ -9,12 +9,12 @@ import { useUserStore, useDeviceStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon } from "lucide-react";
+import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth();
-  const { profile, updateProfile, isSubscribed, shareAnalytics, shareHealthData, setShareAnalytics, setShareHealthData } = useUserStore();
+  const { profile, updateProfile, isSubscribed, shareAnalytics, shareHealthData, setShareAnalytics, setShareHealthData, fontSize, setFontSize } = useUserStore();
   const device = useDeviceStore((s) => s.device);
   const { theme, setTheme } = useTheme();
   const [name, setName] = useState(profile?.display_name ?? "");
