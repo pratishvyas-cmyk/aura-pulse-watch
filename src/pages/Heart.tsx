@@ -50,7 +50,13 @@ export default function HeartPage() {
               contentStyle={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11 }}
               itemStyle={{ color: "hsl(var(--primary))" }}
             />
-            <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+            <defs>
+              <filter id="hrGlow">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+                <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <Line type="monotone" dataKey="value" stroke="hsl(var(--status-red))" strokeWidth={2.5} dot={false} filter="url(#hrGlow)" />
           </LineChart>
         </ResponsiveContainer>
       </div>
