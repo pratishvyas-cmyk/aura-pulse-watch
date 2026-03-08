@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { useUserStore } from "@/store";
+import type { PreAuthProfile } from "@/store";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
