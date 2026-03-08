@@ -86,9 +86,15 @@ export default {
         sans: ["Montserrat", "system-ui", "sans-serif"],
       },
       fontSize: {
-        "metric-xl": ["3.5rem", { lineHeight: "1", fontWeight: "300", letterSpacing: "-0.02em" }],
-        "metric-lg": ["2.5rem", { lineHeight: "1", fontWeight: "300", letterSpacing: "-0.02em" }],
-        "metric-md": ["2rem",   { lineHeight: "1.1", fontWeight: "400" }],
+        "metric-xl": ["4rem",   { lineHeight: "1",   fontWeight: "800", letterSpacing: "-0.04em" }],
+        "metric-lg": ["2.75rem",{ lineHeight: "1",   fontWeight: "800", letterSpacing: "-0.04em" }],
+        "metric-md": ["2.25rem",{ lineHeight: "1.1", fontWeight: "700", letterSpacing: "-0.02em" }],
+        "metric-sm": ["1.5rem", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "-0.02em" }],
+      },
+      boxShadow: {
+        "glow-blue": "var(--shadow-glow-blue)",
+        "glow-gold": "var(--shadow-glow-gold)",
+        "glow-teal": "var(--shadow-glow-teal)",
       },
       keyframes: {
         "accordion-down": {
