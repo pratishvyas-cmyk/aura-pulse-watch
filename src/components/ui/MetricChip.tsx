@@ -17,7 +17,7 @@ export function MetricChip({ icon, value, unit, label, highlight, pulse, classNa
     <div
       className={cn(
         "flex flex-col items-center gap-1 rounded-2xl border border-subtle bg-surface px-4 py-3 shadow-card",
-        highlight && "border-primary/30 bg-teal-dim",
+        highlight && "border-teal/30 bg-teal-dim",
         className
       )}
     >

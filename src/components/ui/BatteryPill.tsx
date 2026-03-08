@@ -16,7 +16,7 @@ export function BatteryPill({ level }: { level: number }) {
     "text-status-red";
 
   return (
-    <div className={cn("flex items-center gap-1 rounded-full border border-subtle bg-surface px-2.5 py-1", color)}>
+    <div className={cn("flex items-center gap-1 rounded-full border border-subtle bg-surface px-2.5 py-1 shadow-card", color)}>
       <Icon className="h-3 w-3" />
       <span className="text-[11px]">{level}%</span>
     </div>

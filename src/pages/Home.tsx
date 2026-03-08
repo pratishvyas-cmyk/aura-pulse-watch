@@ -91,11 +91,11 @@ export default function HomePage() {
               labelStyle={{ color: "hsl(var(--muted-foreground))" }}
               itemStyle={{ color: stressColor }}
             />
-            <Area type="monotone" dataKey="value" stroke={stressColor} strokeWidth={1.5} fill="url(#stressGrad)" dot={false} />
-          </AreaChart>
-        </ResponsiveContainer>
-        <div className="mt-2 flex items-center gap-1.5">
-          <div className={cn("h-2 w-2 rounded-full", stressLevel === "calm" ? "bg-status-green" : stressLevel === "elevated" ? "bg-status-amber" : "bg-status-red")} />
+      <Area type="monotone" dataKey="value" stroke={stressColor} strokeWidth={1.5} fill="url(#stressGrad)" dot={false} />
+        </AreaChart>
+      </ResponsiveContainer>
+      <div className="mt-2 flex items-center gap-1.5">
+        <div className={cn("h-2 w-2 rounded-full", stressLevel === "calm" ? "bg-status-green" : stressLevel === "elevated" ? "bg-status-amber" : "bg-status-red")} />
           <span className="text-xs text-muted-foreground capitalize">{stressLevel} stress right now · {liveStress}/100</span>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function HomePage() {
       {/* HR sparkline */}
       <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
         <SectionHeader title="Heart rate · 24h" action={{ label: "Details →", onClick: () => navigate("/heart") }} className="mb-3" />
-        <SparkLine data={hrData} height={60} />
+        <SparkLine data={hrData} height={60} color="hsl(var(--teal))" />
         <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
           <span>00:00</span><span>12:00</span><span>Now</span>
         </div>
