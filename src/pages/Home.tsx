@@ -56,13 +56,13 @@ export default function HomePage() {
         </h1>
       </div>
 
-      {/* Readiness ring + metric chips */}
-      <div className="flex items-center gap-4">
-        <MetricRing score={readinessScore} size={130} color={readinessColor} label="Readiness" className="flex-shrink-0" />
-        <div className="grid grid-cols-1 gap-2 flex-1">
-          <MetricChip icon={<Heart className="h-4 w-4" />}     value={liveHeartRate} unit="bpm" label="Heart rate" color="red"   highlight pulse />
-          <MetricChip icon={<Brain className="h-4 w-4" />}     value={liveStress}    label="Stress"     color={stressLevel === "calm" ? "green" : stressLevel === "elevated" ? "amber" : "red"} highlight />
-          <MetricChip icon={<Activity className="h-4 w-4" />}  value={liveHRV}       unit="ms" label="HRV" color="blue" highlight />
+      {/* Readiness ring centered + metric row */}
+      <div className="flex flex-col items-center gap-4">
+        <MetricRing score={readinessScore} size={150} color={readinessColor} label="Readiness" className="flex-shrink-0" />
+        <div className="grid grid-cols-3 gap-2 w-full">
+          <MetricChip icon={<Heart className="h-4 w-4" />}    value={liveHeartRate} unit="bpm" label="Heart rate" color="red"   highlight pulse />
+          <MetricChip icon={<Brain className="h-4 w-4" />}    value={liveStress}    label="Stress"     color={stressLevel === "calm" ? "green" : stressLevel === "elevated" ? "amber" : "red"} highlight />
+          <MetricChip icon={<Activity className="h-4 w-4" />} value={liveHRV}       unit="ms" label="HRV" color="blue" highlight />
         </div>
       </div>
 
