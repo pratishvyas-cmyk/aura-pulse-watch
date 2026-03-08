@@ -72,6 +72,31 @@ export const weeklySteps: WeeklyPoint[] = [
   { day: "Sun", value: 5600 },
 ];
 
+// 7-day readiness scores
+export const weeklyReadiness: WeeklyPoint[] = [
+  { day: "Mon", value: 72 },
+  { day: "Tue", value: 65 },
+  { day: "Wed", value: 80 },
+  { day: "Thu", value: 78 },
+  { day: "Fri", value: 70 },
+  { day: "Sat", value: 85 },
+  { day: "Sun", value: 82 },
+];
+
+// 7-day HRV average
+export const weeklyHRV: WeeklyPoint[] = [
+  { day: "Mon", value: 48 },
+  { day: "Tue", value: 44 },
+  { day: "Wed", value: 56 },
+  { day: "Thu", value: 52 },
+  { day: "Fri", value: 49 },
+  { day: "Sat", value: 60 },
+  { day: "Sun", value: 54 },
+];
+
+// Step goal streaks (true = hit goal)
+export const stepStreaks: boolean[] = [true, false, true, true, true, true, false];
+
 export const lastNightSleep: SleepSummary = {
   score: 78,
   durationMins: 432, // 7h 12m
@@ -81,9 +106,37 @@ export const lastNightSleep: SleepSummary = {
   awakeMins: 34,
 };
 
+// Weekly sleep durations (in hours) for debt calculation
+export const weeklySleepHours: WeeklyPoint[] = [
+  { day: "Mon", value: 6.5 },
+  { day: "Tue", value: 5.8 },
+  { day: "Wed", value: 7.2 },
+  { day: "Thu", value: 6.9 },
+  { day: "Fri", value: 6.0 },
+  { day: "Sat", value: 8.1 },
+  { day: "Sun", value: 7.2 },
+];
+
 export const hrZones = [
   { label: "Resting",  min: 0,   max: 60,  pct: 42, color: "hsl(var(--text-muted))" },
   { label: "Fat Burn", min: 61,  max: 115, pct: 35, color: "hsl(var(--primary))" },
   { label: "Cardio",   min: 116, max: 153, pct: 18, color: "hsl(var(--status-amber))" },
   { label: "Peak",     min: 154, max: 220, pct: 5,  color: "hsl(var(--status-red))" },
+];
+
+// Mock stress events (manual + auto)
+export interface StressEvent {
+  id: string;
+  time: string;       // HH:mm
+  score: number;
+  label: string;
+  isManual: boolean;
+}
+
+export const stressEvents: StressEvent[] = [
+  { id: "1", time: "09:14", score: 72, label: "Morning spike", isManual: false },
+  { id: "2", time: "11:30", score: 81, label: "Manual marker", isManual: true },
+  { id: "3", time: "13:45", score: 65, label: "Post-lunch", isManual: false },
+  { id: "4", time: "15:20", score: 74, label: "Manual marker", isManual: true },
+  { id: "5", time: "17:05", score: 58, label: "Afternoon stress", isManual: false },
 ];

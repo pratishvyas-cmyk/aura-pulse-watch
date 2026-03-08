@@ -1,5 +1,6 @@
 // ── Zustand Stores ────────────────────────────────────────────────────────────
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type {
   Profile,
   DeviceInfo,
@@ -37,12 +38,14 @@ interface HealthState {
   todayDistanceM: number;
   todayActiveMins: number;
   recentReadings: HealthReading[];
+  streakDays: number;
   setLiveHeartRate: (v: number) => void;
   setLiveHRV: (v: number) => void;
   setLiveStress: (v: number) => void;
   setReadiness: (v: number) => void;
   setTodayStats: (s: Partial<Pick<HealthState, "todaySteps" | "todayCalories" | "todayDistanceM" | "todayActiveMins">>) => void;
   setRecentReadings: (r: HealthReading[]) => void;
+  setStreakDays: (v: number) => void;
 }
 
 export const useHealthStore = create<HealthState>((set) => ({
@@ -55,12 +58,14 @@ export const useHealthStore = create<HealthState>((set) => ({
   todayDistanceM:  5620,
   todayActiveMins: 42,
   recentReadings:  [],
+  streakDays:      5,
   setLiveHeartRate: (liveHeartRate) => set({ liveHeartRate }),
   setLiveHRV:      (liveHRV) => set({ liveHRV }),
   setLiveStress:   (liveStress) => set({ liveStress }),
   setReadiness:    (readinessScore) => set({ readinessScore }),
   setTodayStats:   (s) => set((prev) => ({ ...prev, ...s })),
   setRecentReadings: (recentReadings) => set({ recentReadings }),
+  setStreakDays:   (streakDays) => set({ streakDays }),
 }));
 
 // ── Gesture Store ─────────────────────────────────────────────────────────────
@@ -99,7 +104,8 @@ interface UserState {
   isSubscribed: boolean;
   shareAnalytics: boolean;
   shareHealthData: boolean;
-  fontSize: number; // 12–22, default 16
+  fontSize: number;
+  sleepGoalHours: number;
   setProfile: (p: Profile | null) => void;
   updateProfile: (changes: Partial<Profile>) => void;
   setPreAuthProfile: (p: PreAuthProfile) => void;
@@ -108,23 +114,31 @@ interface UserState {
   setShareAnalytics: (v: boolean) => void;
   setShareHealthData: (v: boolean) => void;
   setFontSize: (v: number) => void;
+  setSleepGoalHours: (v: number) => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  profile: null,
-  preAuthProfile: null,
-  preAuthDone: false,
-  isSubscribed: false,
-  shareAnalytics: true,
-  shareHealthData: false,
-  fontSize: 16,
-  setProfile: (profile) => set({ profile }),
-  updateProfile: (changes) =>
-    set((s) => s.profile ? { profile: { ...s.profile, ...changes } } : s),
-  setPreAuthProfile: (preAuthProfile) => set({ preAuthProfile }),
-  setPreAuthDone: (preAuthDone) => set({ preAuthDone }),
-  setSubscribed: (isSubscribed) => set({ isSubscribed }),
-  setShareAnalytics: (shareAnalytics) => set({ shareAnalytics }),
-  setShareHealthData: (shareHealthData) => set({ shareHealthData }),
-  setFontSize: (fontSize) => set({ fontSize }),
-}));
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      profile: null,
+      preAuthProfile: null,
+      preAuthDone: false,
+      isSubscribed: false,
+      shareAnalytics: true,
+      shareHealthData: false,
+      fontSize: 16,
+      sleepGoalHours: 8,
+      setProfile: (profile) => set({ profile }),
+      updateProfile: (changes) =>
+        set((s) => s.profile ? { profile: { ...s.profile, ...changes } } : s),
+      setPreAuthProfile: (preAuthProfile) => set({ preAuthProfile }),
+      setPreAuthDone: (preAuthDone) => set({ preAuthDone }),
+      setSubscribed: (isSubscribed) => set({ isSubscribed }),
+      setShareAnalytics: (shareAnalytics) => set({ shareAnalytics }),
+      setShareHealthData: (shareHealthData) => set({ shareHealthData }),
+      setFontSize: (fontSize) => set({ fontSize }),
+      setSleepGoalHours: (sleepGoalHours) => set({ sleepGoalHours }),
+    }),
+    { name: "thepuck-user-store", partialState: true }
+  )
+);
