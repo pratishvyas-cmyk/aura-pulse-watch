@@ -139,6 +139,6 @@ export const useUserStore = create<UserState>()(
       setFontSize: (fontSize) => set({ fontSize }),
       setSleepGoalHours: (sleepGoalHours) => set({ sleepGoalHours }),
     }),
-    { name: "thepuck-user-store", partialState: true }
+    { name: "thepuck-user-store" }
   )
 );
