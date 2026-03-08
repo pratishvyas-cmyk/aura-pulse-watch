@@ -9,12 +9,12 @@ import { useUserStore, useDeviceStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon } from "lucide-react";
+import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth();
-  const { profile, updateProfile, isSubscribed, shareAnalytics, shareHealthData, setShareAnalytics, setShareHealthData } = useUserStore();
+  const { profile, updateProfile, isSubscribed, shareAnalytics, shareHealthData, setShareAnalytics, setShareHealthData, fontSize, setFontSize } = useUserStore();
   const device = useDeviceStore((s) => s.device);
   const { theme, setTheme } = useTheme();
   const [name, setName] = useState(profile?.display_name ?? "");
@@ -81,8 +81,9 @@ export default function SettingsPage() {
         <div className="px-4 pt-4 pb-2">
           <SectionHeader title="Appearance" />
         </div>
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
+        <div className="divide-y divide-border px-4">
+          {/* Theme toggle */}
+          <div className="flex items-center justify-between py-3">
             <div className="flex items-center gap-3">
               {isDark
                 ? <Moon className="h-4 w-4 text-muted-foreground" />
@@ -116,6 +117,42 @@ export default function SettingsPage() {
                 <Moon className="h-3 w-3" />
                 Dark
               </button>
+            </div>
+          </div>
+
+          {/* Font size slider */}
+          <div className="py-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <ALargeSmall className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-foreground">Text size</span>
+              </div>
+              <span className="text-sm font-semibold text-primary tabular-nums">{fontSize}px</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] text-muted-foreground w-5 text-center">A</span>
+              <input
+                type="range"
+                min={12}
+                max={22}
+                step={1}
+                value={fontSize}
+                onChange={(e) => setFontSize(Number(e.target.value))}
+                className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer accent-primary bg-border"
+              />
+              <span className="text-[15px] font-bold text-muted-foreground w-5 text-center">A</span>
+            </div>
+            <div className="flex justify-between px-5">
+              {[12, 14, 16, 18, 20, 22].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setFontSize(s)}
+                  className={cn(
+                    "h-1.5 w-1.5 rounded-full transition-all",
+                    fontSize === s ? "bg-primary scale-125" : "bg-border"
+                  )}
+                />
+              ))}
             </div>
           </div>
         </div>

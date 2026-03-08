@@ -1,19 +1,25 @@
 // ── AppLayout — wraps all authenticated screens ───────────────────────────────
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BottomTabBar } from "@/components/BottomTabBar";
-import { useDeviceStore } from "@/store";
+import { useDeviceStore, useUserStore } from "@/store";
 import { BatteryPill } from "@/components/ui/BatteryPill";
 import { ConnectionBadge } from "@/components/ui/ConnectionBadge";
 import { Sun, Moon } from "lucide-react";
 
 export function AppLayout() {
   const device = useDeviceStore((s) => s.device);
+  const fontSize = useUserStore((s) => s.fontSize);
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark";
+
+  // Apply font size to the HTML root so all rem-based sizes scale
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${fontSize}px`;
+  }, [fontSize]);
 
   return (
     <SidebarProvider>
