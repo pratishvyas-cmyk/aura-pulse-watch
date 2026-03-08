@@ -1,5 +1,5 @@
 // ── Stress & Readiness ────────────────────────────────────────────────────────
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Screen } from "@/components/ui/Screen";
 import { MetricRing } from "@/components/ui/MetricRing";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -13,13 +13,12 @@ import {
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { Brain, Zap, Heart, Moon, TrendingUp, AlertTriangle, Clock, Hand, Sparkles, Loader2 } from "lucide-react";
+import { Brain, Heart, Moon, TrendingUp, AlertTriangle, Clock, Hand } from "lucide-react";
 import {
   AreaChart, Area, LineChart, Line, BarChart, Bar, Cell,
   ResponsiveContainer, XAxis, YAxis, Tooltip, ReferenceLine,
 } from "recharts";
 import { cn } from "@/lib/utils";
-import { supabase as sbClient } from "@/integrations/supabase/client";
 
 type Period = "day" | "week" | "month";
 
@@ -41,12 +40,10 @@ function ActivityIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function StressPage() {
   const [period, setPeriod] = useState<Period>("day");
   const [marking, setMarking] = useState(false);
-  const [insight, setInsight] = useState<string | null>(null);
-  const [loadingInsight, setLoadingInsight] = useState(false);
   const { user } = useAuth();
-  const { liveStress, liveHRV, readinessScore, setLiveStress } = useHealthStore();
+  const { liveStress, liveHRV, readinessScore } = useHealthStore();
 
-  const stressDay  = useMemo(generateStressTimeline, []);
+  const stressDay   = useMemo(generateStressTimeline, []);
   const hrvTimeline = useMemo(generateHRVTimeline, []);
 
   const stressLevel = getStressLevel(liveStress);
@@ -75,32 +72,6 @@ export default function StressPage() {
     }
   }
 
-  async function generateInsight() {
-    setLoadingInsight(true);
-    setInsight(null);
-    try {
-      const prompt = `You are a health coach. Based on these metrics, give a 2-sentence personalised readiness insight:
-- Readiness score: ${readinessScore}/100
-- HRV: ${liveHRV}ms
-- Stress level: ${stressLevel} (${liveStress}/100)
-- Sleep quality score: 78/100
-Keep it warm, specific, and actionable. No bullet points.`;
-
-      const { data, error } = await sbClient.functions.invoke("ai-proxy", {
-        body: { model: "google/gemini-2.5-flash", prompt },
-      });
-      if (error) throw error;
-      setInsight(data?.text ?? data?.content ?? "Unable to generate insight right now.");
-    } catch {
-      setInsight("Your readiness looks " + (readinessScore >= 80 ? "great today — you're primed to perform at your best." : readinessScore >= 60 ? "moderate — consider lighter activity and good hydration." : "low — your body is asking for rest and recovery."));
-    } finally {
-      setLoadingInsight(false);
-    }
-  }
-
-  // Auto-load insight on mount
-  useEffect(() => { generateInsight(); }, []);
-
   const ringColor = stressLevel === "calm" ? "green" : stressLevel === "elevated" ? "amber" : "red";
 
   return (
@@ -122,27 +93,6 @@ Keep it warm, specific, and actionable. No bullet points.`;
           <MetricRing score={liveStress} size={120} color={ringColor} label="Stress" sublabel="level" />
           <p className="text-xs text-muted-foreground capitalize">{stressLevel}</p>
         </div>
-      </div>
-
-      {/* AI Readiness Insight */}
-      <div className="rounded-2xl border border-primary/20 bg-primary/5 p-4 shadow-card">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <SectionHeader title="Today's readiness insight" />
-          </div>
-          <button onClick={generateInsight} disabled={loadingInsight} className="text-xs text-primary hover:opacity-70 transition-opacity disabled:opacity-40">
-            Refresh
-          </button>
-        </div>
-        {loadingInsight ? (
-          <div className="flex items-center gap-2 py-1">
-            <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
-            <span className="text-xs text-muted-foreground">Analysing your metrics…</span>
-          </div>
-        ) : (
-          <p className="text-sm text-foreground leading-relaxed">{insight ?? "—"}</p>
-        )}
       </div>
 
       {/* Readiness breakdown */}
