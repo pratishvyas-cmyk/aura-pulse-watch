@@ -9,7 +9,7 @@ import { useUserStore, useDeviceStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall } from "lucide-react";
+import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall, Zap, Heart, Brain, TrendingUp, Moon as MoonIcon, Activity, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
