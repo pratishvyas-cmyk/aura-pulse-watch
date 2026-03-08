@@ -73,7 +73,7 @@ export function MetricRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          style={{ filter: `blur(${strokeWidth * 1.4}px)`, opacity: 0.35 }}
+          style={{ filter: `blur(${strokeWidth * 0.8}px)`, opacity: 0.18 }}
         />
 
         {/* Track */}
