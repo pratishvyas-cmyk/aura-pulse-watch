@@ -83,12 +83,12 @@ export default {
         "3xl":"1.5rem",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Montserrat", "system-ui", "sans-serif"],
       },
       fontSize: {
         "metric-xl": ["3.5rem", { lineHeight: "1", fontWeight: "300", letterSpacing: "-0.02em" }],
         "metric-lg": ["2.5rem", { lineHeight: "1", fontWeight: "300", letterSpacing: "-0.02em" }],
-        "metric-md": ["1.75rem", { lineHeight: "1.1", fontWeight: "400" }],
+        "metric-md": ["2rem",   { lineHeight: "1.1", fontWeight: "400" }],
       },
       keyframes: {
         "accordion-down": {
