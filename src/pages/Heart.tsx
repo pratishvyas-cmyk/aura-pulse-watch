@@ -4,17 +4,22 @@ import { Screen } from "@/components/ui/Screen";
 import { MetricRing } from "@/components/ui/MetricRing";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useHealthStore } from "@/store";
-import { generateHRTimeline, hrZones, weeklySteps } from "@/lib/mockData";
-import { Heart, Footprints, Flame, MapPin, Clock } from "lucide-react";
+import { generateHRTimeline, hrZones, weeklySteps, weeklyHR } from "@/lib/mockData";
+import { Heart, Footprints, Flame, MapPin, Clock, TrendingUp } from "lucide-react";
 import {
-  LineChart, Line, BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid,
+  LineChart, Line, BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, Cell, ReferenceLine,
 } from "recharts";
+
+const STEPS_GOAL = 10000;
 
 export default function HeartPage() {
   const { liveHeartRate, todaySteps, todayCalories, todayDistanceM, todayActiveMins } = useHealthStore();
   const hrData = useMemo(generateHRTimeline, []);
 
   const distKm = (todayDistanceM / 1000).toFixed(2);
+
+  // Week avg heart rate
+  const avgHR = Math.round(weeklyHR.reduce((a, d) => a + d.value, 0) / weeklyHR.length);
 
   return (
     <Screen className="space-y-6">
@@ -61,6 +66,24 @@ export default function HeartPage() {
         </ResponsiveContainer>
       </div>
 
+      {/* Weekly HR trend */}
+      <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
+        <div className="flex items-center justify-between mb-3">
+          <SectionHeader title="Heart rate · last 7 days" />
+          <span className="text-xs text-muted-foreground">avg <span className="text-foreground font-medium">{avgHR} bpm</span></span>
+        </div>
+        <ResponsiveContainer width="100%" height={90}>
+          <LineChart data={weeklyHR} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
+            <XAxis dataKey="day" tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} />
+            <YAxis tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} domain={[60, 85]} />
+            <Tooltip contentStyle={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11 }}
+              formatter={(v: number) => [`${v} bpm`, "Heart rate"]} />
+            <ReferenceLine y={avgHR} stroke="hsl(var(--status-red))" strokeDasharray="3 3" strokeOpacity={0.4} />
+            <Line type="monotone" dataKey="value" stroke="hsl(var(--status-red))" strokeWidth={2} dot={{ fill: "hsl(var(--status-red))", r: 3 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
       {/* HR zones */}
       <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
         <SectionHeader title="HR zones today" className="mb-3" />
@@ -97,18 +120,27 @@ export default function HeartPage() {
 
       {/* Weekly steps bar chart */}
       <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
-        <SectionHeader title="Steps · last 7 days" className="mb-3" />
+        <div className="flex items-center justify-between mb-3">
+          <SectionHeader title="Steps · last 7 days" />
+          <span className="text-xs text-muted-foreground">goal <span className="text-foreground font-medium">{(STEPS_GOAL / 1000).toFixed(0)}k</span></span>
+        </div>
         <ResponsiveContainer width="100%" height={100}>
           <BarChart data={weeklySteps} margin={{ top: 4, right: 0, bottom: 0, left: -20 }}>
             <XAxis dataKey="day" tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} />
             <YAxis tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} />
+            <ReferenceLine y={STEPS_GOAL} stroke="hsl(var(--status-green))" strokeDasharray="3 3" strokeOpacity={0.5} />
             <Tooltip
               contentStyle={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11 }}
               formatter={(v: number) => [v.toLocaleString(), "steps"]}
             />
-            <Bar dataKey="value" fill="hsl(var(--primary))" radius={[3, 3, 0, 0]} />
+            <Bar dataKey="value" radius={[3, 3, 0, 0]}>
+              {weeklySteps.map((entry, i) => (
+                <Cell key={i} fill={entry.value >= STEPS_GOAL ? "hsl(var(--status-green))" : "hsl(var(--primary))"} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
+        <p className="text-[10px] text-muted-foreground mt-1">— Green line = 10k step goal</p>
       </div>
     </Screen>
   );
