@@ -128,12 +128,12 @@ export default function HomePage() {
         <SectionHeader title="Heart rate · 24h" action={{ label: "Details →", onClick: () => navigate("/heart") }} className="mb-3" />
         <ResponsiveContainer width="100%" height={60}>
           <LineChart data={hrData} margin={{ top: 4, right: 0, bottom: 0, left: -40 }}>
-            <defs>
-              <filter id="homeHrGlow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-            </defs>
+          <defs>
+            <filter id="homeHrGlow">
+              <feGaussianBlur stdDeviation="1" result="coloredBlur" />
+              <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
             <XAxis dataKey="time" hide />
             <YAxis hide domain={["dataMin - 5", "dataMax + 5"]} />
             <Tooltip
