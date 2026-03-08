@@ -14,7 +14,216 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      device_info: {
+        Row: {
+          battery_level: number
+          connection_state: string
+          created_at: string
+          firmware_version: string
+          id: string
+          last_seen_at: string | null
+          last_seen_lat: number | null
+          last_seen_lng: number | null
+          model: string
+          serial_number: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          battery_level?: number
+          connection_state?: string
+          created_at?: string
+          firmware_version?: string
+          id?: string
+          last_seen_at?: string | null
+          last_seen_lat?: number | null
+          last_seen_lng?: number | null
+          model?: string
+          serial_number?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          battery_level?: number
+          connection_state?: string
+          created_at?: string
+          firmware_version?: string
+          id?: string
+          last_seen_at?: string | null
+          last_seen_lat?: number | null
+          last_seen_lng?: number | null
+          model?: string
+          serial_number?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      gesture_configs: {
+        Row: {
+          action: string
+          created_at: string
+          enabled: boolean
+          gesture_type: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          enabled?: boolean
+          gesture_type: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          enabled?: boolean
+          gesture_type?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      haptic_profiles: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          intensity: number
+          pattern: string
+          profile_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          intensity?: number
+          pattern?: string
+          profile_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          intensity?: number
+          pattern?: string
+          profile_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      health_readings: {
+        Row: {
+          active_mins: number | null
+          calories: number | null
+          created_at: string
+          distance_m: number | null
+          heart_rate: number | null
+          hrv: number | null
+          id: string
+          is_manual_stress_event: boolean
+          notes: string | null
+          readiness_score: number | null
+          recorded_at: string
+          sleep_awake_mins: number | null
+          sleep_deep_mins: number | null
+          sleep_duration_mins: number | null
+          sleep_light_mins: number | null
+          sleep_rem_mins: number | null
+          sleep_score: number | null
+          steps: number | null
+          stress_score: number | null
+          user_id: string
+        }
+        Insert: {
+          active_mins?: number | null
+          calories?: number | null
+          created_at?: string
+          distance_m?: number | null
+          heart_rate?: number | null
+          hrv?: number | null
+          id?: string
+          is_manual_stress_event?: boolean
+          notes?: string | null
+          readiness_score?: number | null
+          recorded_at?: string
+          sleep_awake_mins?: number | null
+          sleep_deep_mins?: number | null
+          sleep_duration_mins?: number | null
+          sleep_light_mins?: number | null
+          sleep_rem_mins?: number | null
+          sleep_score?: number | null
+          steps?: number | null
+          stress_score?: number | null
+          user_id: string
+        }
+        Update: {
+          active_mins?: number | null
+          calories?: number | null
+          created_at?: string
+          distance_m?: number | null
+          heart_rate?: number | null
+          hrv?: number | null
+          id?: string
+          is_manual_stress_event?: boolean
+          notes?: string | null
+          readiness_score?: number | null
+          recorded_at?: string
+          sleep_awake_mins?: number | null
+          sleep_deep_mins?: number | null
+          sleep_duration_mins?: number | null
+          sleep_light_mins?: number | null
+          sleep_rem_mins?: number | null
+          sleep_score?: number | null
+          steps?: number | null
+          stress_score?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          age: number | null
+          created_at: string
+          display_name: string | null
+          id: string
+          onboarding_done: boolean
+          units: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          onboarding_done?: boolean
+          units?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age?: number | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          onboarding_done?: boolean
+          units?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
