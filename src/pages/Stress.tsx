@@ -15,7 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { Brain, Zap, Heart, Moon, TrendingUp, AlertTriangle, Clock, Hand, Sparkles, Loader2 } from "lucide-react";
 import {
-  AreaChart, Area, LineChart, Line, BarChart, Bar,
+  AreaChart, Area, LineChart, Line, BarChart, Bar, Cell,
   ResponsiveContainer, XAxis, YAxis, Tooltip, ReferenceLine,
 } from "recharts";
 import { cn } from "@/lib/utils";
