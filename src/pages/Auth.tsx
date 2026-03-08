@@ -1,15 +1,20 @@
-// ── Auth page (login + signup) ────────────────────────────────────────────────
+// ── Auth page (login + signup) — shown after onboarding ──────────────────────
 import React, { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { Zap, Mail, Lock, User } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useUserStore } from "@/store";
 
 export default function AuthPage() {
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const { preAuthProfile, preAuthDone } = useUserStore();
+
+  // If arrived via onboarding, default to signup; otherwise login
+  const [mode, setMode] = useState<"login" | "signup">(preAuthDone ? "signup" : "login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  // Pre-fill name from onboarding if available
+  const [name, setName] = useState(preAuthProfile?.display_name ?? "");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -20,10 +25,16 @@ export default function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { display_name: name }, emailRedirectTo: window.location.origin },
+          options: {
+            data: { display_name: name },
+            emailRedirectTo: window.location.origin,
+          },
         });
         if (error) throw error;
-        toast({ title: "Check your email", description: "Confirm your address to activate your account." });
+        toast({
+          title: "Check your email",
+          description: "Confirm your address to activate your account.",
+        });
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -48,7 +59,11 @@ export default function AuthPage() {
           </div>
           <h1 className="text-2xl font-light tracking-tight text-foreground">ThePuck</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {mode === "login" ? "Welcome back" : "Create your account"}
+            {mode === "login"
+              ? "Welcome back"
+              : preAuthDone
+              ? "Almost there — create your account"
+              : "Create your account"}
           </p>
         </div>
 

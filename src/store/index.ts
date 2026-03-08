@@ -85,13 +85,24 @@ export const useGestureStore = create<GestureState>((set) => ({
 }));
 
 // ── User Store ────────────────────────────────────────────────────────────────
+export interface PreAuthProfile {
+  display_name: string;
+  age: number | null;
+  units: "metric" | "imperial";
+  devicePaired: boolean;
+}
+
 interface UserState {
   profile: Profile | null;
+  preAuthProfile: PreAuthProfile | null;
+  preAuthDone: boolean;
   isSubscribed: boolean;
   shareAnalytics: boolean;
   shareHealthData: boolean;
   setProfile: (p: Profile | null) => void;
   updateProfile: (changes: Partial<Profile>) => void;
+  setPreAuthProfile: (p: PreAuthProfile) => void;
+  setPreAuthDone: (v: boolean) => void;
   setSubscribed: (v: boolean) => void;
   setShareAnalytics: (v: boolean) => void;
   setShareHealthData: (v: boolean) => void;
@@ -99,12 +110,16 @@ interface UserState {
 
 export const useUserStore = create<UserState>((set) => ({
   profile: null,
+  preAuthProfile: null,
+  preAuthDone: false,
   isSubscribed: false,
   shareAnalytics: true,
   shareHealthData: false,
   setProfile: (profile) => set({ profile }),
   updateProfile: (changes) =>
     set((s) => s.profile ? { profile: { ...s.profile, ...changes } } : s),
+  setPreAuthProfile: (preAuthProfile) => set({ preAuthProfile }),
+  setPreAuthDone: (preAuthDone) => set({ preAuthDone }),
   setSubscribed: (isSubscribed) => set({ isSubscribed }),
   setShareAnalytics: (shareAnalytics) => set({ shareAnalytics }),
   setShareHealthData: (shareHealthData) => set({ shareHealthData }),
