@@ -1,8 +1,6 @@
-// ── Onboarding — 3-step pairing wizard ───────────────────────────────────────
+// ── Onboarding — 3-step pairing wizard (pre-auth) ────────────────────────────
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Zap, Bluetooth, CheckCircle2, ChevronRight, User, Ruler } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 import { useUserStore } from "@/store";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { GhostButton } from "@/components/ui/PrimaryButton";
@@ -11,15 +9,13 @@ import { cn } from "@/lib/utils";
 type Step = 0 | 1 | 2;
 
 export default function Onboarding() {
-  const navigate = useNavigate();
-  const { profile, updateProfile } = useUserStore();
+  const { setPreAuthProfile, setPreAuthDone } = useUserStore();
   const [step, setStep] = useState<Step>(0);
   const [scanning, setScanning] = useState(false);
   const [found, setFound] = useState(false);
-  const [name, setName] = useState(profile?.display_name ?? "");
-  const [age, setAge] = useState<string>(profile?.age?.toString() ?? "");
-  const [units, setUnits] = useState<"metric" | "imperial">(profile?.units ?? "metric");
-  const [saving, setSaving] = useState(false);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState<string>("");
+  const [units, setUnits] = useState<"metric" | "imperial">("metric");
 
   // Simulate BLE scan
   useEffect(() => {
@@ -29,17 +25,14 @@ export default function Onboarding() {
     }
   }, [step, scanning]);
 
-  async function finishOnboarding() {
-    if (!profile) return;
-    setSaving(true);
-    await supabase.from("profiles").update({
+  function finishOnboarding() {
+    setPreAuthProfile({
       display_name: name,
       age: age ? parseInt(age) : null,
       units,
-      onboarding_done: true,
-    }).eq("user_id", profile.user_id);
-    updateProfile({ display_name: name, age: age ? parseInt(age) : null, units, onboarding_done: true });
-    navigate("/");
+      devicePaired: found,
+    });
+    setPreAuthDone(true);
   }
 
   return (
@@ -199,8 +192,8 @@ export default function Onboarding() {
               </div>
             </div>
 
-            <PrimaryButton onClick={finishOnboarding} loading={saving} className="w-full">
-              Start tracking <ChevronRight className="h-4 w-4" />
+            <PrimaryButton onClick={finishOnboarding} className="w-full">
+              Create your account <ChevronRight className="h-4 w-4" />
             </PrimaryButton>
           </div>
         )}

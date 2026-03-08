@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 
 function AppRoutes() {
   const { user, loading } = useAuth();
-  const profile = useUserStore((s) => s.profile);
+  const { profile, preAuthDone } = useUserStore();
 
   useHealthData(user);
   useDevice(user);
@@ -37,8 +37,9 @@ function AppRoutes() {
     );
   }
 
-  if (!user) return <AuthPage />;
-  if (profile && !profile.onboarding_done) return <Onboarding />;
+  // New flow: Onboarding → Auth → App
+  if (!user && !preAuthDone) return <Onboarding />;
+  if (!user && preAuthDone) return <AuthPage />;
 
   return (
     <Routes>
@@ -51,7 +52,6 @@ function AppRoutes() {
         <Route path="/find"     element={<FindPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
-      <Route path="/onboarding" element={<Onboarding />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
