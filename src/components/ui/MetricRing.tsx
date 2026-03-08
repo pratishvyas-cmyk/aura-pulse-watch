@@ -22,12 +22,12 @@ const COLOR_MAP = {
 } as const;
 
 const GLOW_MAP = {
-  gold:  "hsl(var(--gold) / 0.55)",
-  teal:  "hsl(var(--teal) / 0.55)",
-  blue:  "hsl(var(--primary) / 0.6)",
-  green: "hsl(var(--status-green) / 0.55)",
-  amber: "hsl(var(--status-amber) / 0.55)",
-  red:   "hsl(var(--status-red) / 0.55)",
+  gold:  "hsl(var(--gold) / 0.25)",
+  teal:  "hsl(var(--teal) / 0.25)",
+  blue:  "hsl(var(--primary) / 0.25)",
+  green: "hsl(var(--status-green) / 0.25)",
+  amber: "hsl(var(--status-amber) / 0.25)",
+  red:   "hsl(var(--status-red) / 0.25)",
 } as const;
 
 export function MetricRing({
@@ -73,7 +73,7 @@ export function MetricRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          style={{ filter: `blur(${strokeWidth * 1.4}px)`, opacity: 0.35 }}
+          style={{ filter: `blur(${strokeWidth * 0.8}px)`, opacity: 0.18 }}
         />
 
         {/* Track */}
