@@ -48,7 +48,7 @@ export default function HeartPage() {
             <YAxis tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} domain={["dataMin - 5", "dataMax + 5"]} />
             <Tooltip
               contentStyle={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11 }}
-              itemStyle={{ color: "hsl(var(--primary))" }}
+              itemStyle={{ color: "hsl(var(--status-red))" }}
             />
             <defs>
               <filter id="hrGlow">
