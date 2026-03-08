@@ -32,10 +32,7 @@ Deno.serve(async (req) => {
     }
 
     const data = await res.json();
-    const text = data?.choices?.[0]?.message?.content
-      ?? data?.content
-      ?? data?.text
-      ?? "Unable to generate insight.";
+    const text = data?.choices?.[0]?.message?.content ?? "Unable to generate insight.";
 
     return new Response(JSON.stringify({ text }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
