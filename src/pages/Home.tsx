@@ -122,7 +122,7 @@ export default function HomePage() {
       {/* HR sparkline */}
       <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
         <SectionHeader title="Heart rate · 24h" action={{ label: "Details →", onClick: () => navigate("/heart") }} className="mb-3" />
-        <SparkLine data={hrData} height={60} />
+        <SparkLine data={hrData} height={60} color="hsl(var(--teal))" />
         <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
           <span>00:00</span><span>12:00</span><span>Now</span>
         </div>
