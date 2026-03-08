@@ -26,7 +26,7 @@ export default function HeartPage() {
       {/* Live HR */}
       <div className="flex items-center gap-5 rounded-2xl border border-subtle bg-surface p-5 shadow-card">
         <div className="relative flex-shrink-0">
-          <Heart className="h-16 w-16 text-teal animate-pulse-beat" fill="hsl(var(--primary-dim))" />
+          <Heart className="h-16 w-16 animate-pulse-beat" style={{ color: "hsl(var(--status-red))", filter: "drop-shadow(0 0 10px hsl(var(--status-red) / 0.7))" }} fill="hsl(var(--status-red) / 0.15)" />
         </div>
         <div>
           <p className="text-xs text-muted-foreground uppercase tracking-widest">Live heart rate</p>
@@ -48,9 +48,15 @@ export default function HeartPage() {
             <YAxis tick={{ fontSize: 9, fill: "hsl(var(--text-muted))" }} tickLine={false} axisLine={false} domain={["dataMin - 5", "dataMax + 5"]} />
             <Tooltip
               contentStyle={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11 }}
-              itemStyle={{ color: "hsl(var(--primary))" }}
+              itemStyle={{ color: "hsl(var(--status-red))" }}
             />
-            <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+            <defs>
+              <filter id="hrGlow">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+                <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <Line type="monotone" dataKey="value" stroke="hsl(var(--status-red))" strokeWidth={2.5} dot={false} filter="url(#hrGlow)" />
           </LineChart>
         </ResponsiveContainer>
       </div>
