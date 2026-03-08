@@ -99,6 +99,7 @@ interface UserState {
   isSubscribed: boolean;
   shareAnalytics: boolean;
   shareHealthData: boolean;
+  fontSize: number; // 12–22, default 16
   setProfile: (p: Profile | null) => void;
   updateProfile: (changes: Partial<Profile>) => void;
   setPreAuthProfile: (p: PreAuthProfile) => void;
@@ -106,6 +107,7 @@ interface UserState {
   setSubscribed: (v: boolean) => void;
   setShareAnalytics: (v: boolean) => void;
   setShareHealthData: (v: boolean) => void;
+  setFontSize: (v: number) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -115,6 +117,7 @@ export const useUserStore = create<UserState>((set) => ({
   isSubscribed: false,
   shareAnalytics: true,
   shareHealthData: false,
+  fontSize: 16,
   setProfile: (profile) => set({ profile }),
   updateProfile: (changes) =>
     set((s) => s.profile ? { profile: { ...s.profile, ...changes } } : s),
@@ -123,4 +126,5 @@ export const useUserStore = create<UserState>((set) => ({
   setSubscribed: (isSubscribed) => set({ isSubscribed }),
   setShareAnalytics: (shareAnalytics) => set({ shareAnalytics }),
   setShareHealthData: (shareHealthData) => set({ shareHealthData }),
+  setFontSize: (fontSize) => set({ fontSize }),
 }));
