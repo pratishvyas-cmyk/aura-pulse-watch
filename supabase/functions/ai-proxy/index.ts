@@ -14,14 +14,14 @@ Deno.serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not set");
 
-    const res = await fetch("https://api.lovable.ai/v1/chat", {
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${LOVABLE_API_KEY}`,
       },
       body: JSON.stringify({
-        model: model ?? "google/gemini-2.5-flash",
+        model: model ?? "google/gemini-3-flash-preview",
         messages: [{ role: "user", content: prompt }],
       }),
     });
@@ -32,10 +32,7 @@ Deno.serve(async (req) => {
     }
 
     const data = await res.json();
-    const text = data?.choices?.[0]?.message?.content
-      ?? data?.content
-      ?? data?.text
-      ?? "Unable to generate insight.";
+    const text = data?.choices?.[0]?.message?.content ?? "Unable to generate insight.";
 
     return new Response(JSON.stringify({ text }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
