@@ -67,7 +67,7 @@ export function AppSidebar() {
                           : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
-                      <Icon className="h-4 w-4 flex-shrink-0" />
+                      <Icon className="h-[1.05rem] w-[1.05rem] flex-shrink-0" />
                       {!collapsed && <span>{label}</span>}
                     </SidebarMenuButton>
                   </SidebarMenuItem>

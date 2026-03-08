@@ -12,7 +12,7 @@ interface StatBarProps {
 }
 
 const BAR_COLOR = {
-  teal:  "bg-teal",
+  teal:  "bg-primary",
   gold:  "bg-gold",
   green: "bg-status-green",
   amber: "bg-status-amber",
