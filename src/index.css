@@ -9,117 +9,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @layer base {
-  /* ─────────────── LIGHT MODE ─────────────── */
+  /* ─────────────── LIGHT MODE — Warm Obsidian + Rose Gold ─────────────── */
   :root {
-    --background:      220 20% 95%;
-    --surface:         0 0% 100%;
-    --surface-raised:  220 20% 97%;
-    --border:          220 15% 88%;
+    --background:      24 18% 94%;
+    --surface:         28 20% 99%;
+    --surface-raised:  24 18% 97%;
+    --border:          20 14% 87%;
 
-    --foreground:      220 30% 11%;
-    --text-secondary:  220 10% 44%;
-    --text-muted:      220  8% 63%;
+    --foreground:      18 20% 12%;
+    --text-secondary:  18 10% 42%;
+    --text-muted:      18  8% 60%;
 
-    --primary:         212 28% 44%;
+    --primary:         15 55% 52%;
     --primary-foreground: 0 0% 100%;
-    --primary-dim:     212 28% 93%;
+    --primary-dim:     15 50% 93%;
 
-    --teal:            168 52% 40%;
-    --teal-dim:        168 40% 92%;
+    --teal:            340 28% 50%;
+    --teal-dim:        340 28% 93%;
 
-    --gold:            40 53% 48%;
-    --gold-dim:        40 40% 93%;
+    --gold:            35 58% 50%;
+    --gold-dim:        35 45% 93%;
 
     --status-green:    142 55% 42%;
     --status-amber:    38  88% 48%;
     --status-red:      0   72% 58%;
 
     /* shadcn aliases */
-    --card:               0 0% 100%;
-    --card-foreground:    220 30% 11%;
-    --popover:            0 0% 100%;
-    --popover-foreground: 220 30% 11%;
-    --secondary:          220 20% 96%;
-    --secondary-foreground: 220 30% 11%;
-    --muted:              220 20% 96%;
-    --muted-foreground:   220 10% 44%;
-    --accent:             212 28% 93%;
-    --accent-foreground:  220 30% 11%;
+    --card:               28 20% 99%;
+    --card-foreground:    18 20% 12%;
+    --popover:            28 20% 99%;
+    --popover-foreground: 18 20% 12%;
+    --secondary:          24 18% 96%;
+    --secondary-foreground: 18 20% 12%;
+    --muted:              24 18% 96%;
+    --muted-foreground:   18 10% 42%;
+    --accent:             15 50% 93%;
+    --accent-foreground:  18 20% 12%;
     --destructive:        0 72% 50%;
     --destructive-foreground: 0 0% 100%;
-    --input:              220 15% 88%;
-    --ring:               212 28% 44%;
+    --input:              20 14% 87%;
+    --ring:               15 55% 52%;
     --radius:             0.75rem;
 
-    --sidebar-background:          0 0% 100%;
-    --sidebar-foreground:          220 30% 11%;
-    --sidebar-primary:             212 28% 44%;
+    --sidebar-background:          28 20% 99%;
+    --sidebar-foreground:          18 20% 12%;
+    --sidebar-primary:             15 55% 52%;
     --sidebar-primary-foreground:  0 0% 100%;
-    --sidebar-accent:              212 28% 93%;
-    --sidebar-accent-foreground:   220 30% 11%;
-    --sidebar-border:              220 15% 88%;
-    --sidebar-ring:                212 28% 44%;
+    --sidebar-accent:              15 50% 93%;
+    --sidebar-accent-foreground:   18 20% 12%;
+    --sidebar-border:              20 14% 87%;
+    --sidebar-ring:                15 55% 52%;
 
-    --gradient-hero:    linear-gradient(160deg, hsl(212 28% 44% / 0.06) 0%, transparent 60%);
-    --shadow-glow-teal: 0 0 32px hsl(168 52% 40% / 0.28), 0 0 8px hsl(168 52% 40% / 0.18);
-    --shadow-glow-gold: 0 0 24px hsl(40 53% 48% / 0.30), 0 0 8px hsl(40 53% 48% / 0.20);
-    --shadow-card:      0 2px 8px hsl(220 20% 50% / 0.14), 0 8px 32px hsl(220 20% 50% / 0.12), 0 0 0 1px hsl(220 15% 88% / 0.6);
+    --gradient-hero:    linear-gradient(160deg, hsl(15 55% 52% / 0.07) 0%, transparent 60%);
+    --shadow-glow-teal: 0 0 32px hsl(340 28% 50% / 0.24), 0 0 8px hsl(340 28% 50% / 0.14);
+    --shadow-glow-gold: 0 0 24px hsl(15 55% 52% / 0.30), 0 0 8px hsl(15 55% 52% / 0.18);
+    --shadow-card:      0 2px 8px hsl(18 20% 40% / 0.12), 0 8px 32px hsl(18 20% 40% / 0.10), 0 0 0 1px hsl(20 14% 87% / 0.7);
   }
 
-  /* ─────────────── DARK MODE ─────────────── */
+  /* ─────────────── DARK MODE — Warm Obsidian + Rose Gold ─────────────── */
   .dark {
-    --background:      220 20% 4%;
-    --surface:         222 20% 7%;
-    --surface-raised:  222 18% 10%;
-    --border:          218 16% 14%;
+    --background:      20 8% 5%;
+    --surface:         20 8% 8%;
+    --surface-raised:  20 7% 11%;
+    --border:          20 10% 16%;
 
-    --foreground:      0 0% 96%;
-    --text-secondary:  220  9% 63%;
-    --text-muted:      220  9% 37%;
+    --foreground:      30 15% 95%;
+    --text-secondary:  25  8% 62%;
+    --text-muted:      22  7% 38%;
 
-    --primary:         168 75% 44%;
-    --primary-foreground: 0 0% 98%;
-    --primary-dim:     168 60% 14%;
+    --primary:         15 60% 60%;
+    --primary-foreground: 20 8% 5%;
+    --primary-dim:     15 40% 14%;
 
-    --teal:            168 75% 44%;
-    --teal-dim:        168 60% 14%;
+    --teal:            340 30% 58%;
+    --teal-dim:        340 25% 13%;
 
-    --gold:            40 53% 51%;
-    --gold-dim:        40 40% 14%;
+    --gold:            35 60% 56%;
+    --gold-dim:        35 40% 13%;
 
-    --status-green:    142 69% 58%;
-    --status-amber:    38  92% 50%;
-    --status-red:      0   91% 71%;
+    --status-green:    142 60% 55%;
+    --status-amber:    38  88% 52%;
+    --status-red:      0   82% 68%;
 
     /* shadcn aliases */
-    --card:               222 20% 7%;
-    --card-foreground:    0 0% 96%;
-    --popover:            222 20% 7%;
-    --popover-foreground: 0 0% 96%;
-    --secondary:          222 18% 10%;
-    --secondary-foreground: 0 0% 96%;
-    --muted:              222 18% 10%;
-    --muted-foreground:   220  9% 63%;
-    --accent:             222 18% 12%;
-    --accent-foreground:  0 0% 96%;
-    --destructive:        0 63% 46%;
-    --destructive-foreground: 0 0% 98%;
-    --input:              218 16% 14%;
-    --ring:               168 75% 44%;
+    --card:               20 8% 8%;
+    --card-foreground:    30 15% 95%;
+    --popover:            20 8% 8%;
+    --popover-foreground: 30 15% 95%;
+    --secondary:          20 7% 11%;
+    --secondary-foreground: 30 15% 95%;
+    --muted:              20 7% 11%;
+    --muted-foreground:   25  8% 62%;
+    --accent:             20 7% 14%;
+    --accent-foreground:  30 15% 95%;
+    --destructive:        0 60% 48%;
+    --destructive-foreground: 30 15% 95%;
+    --input:              20 10% 16%;
+    --ring:               15 60% 60%;
 
-    --sidebar-background:          222 22% 5%;
-    --sidebar-foreground:          0 0% 96%;
-    --sidebar-primary:             168 75% 44%;
-    --sidebar-primary-foreground:  0 0% 98%;
-    --sidebar-accent:              222 18% 12%;
-    --sidebar-accent-foreground:   0 0% 96%;
-    --sidebar-border:              218 16% 14%;
-    --sidebar-ring:                168 75% 44%;
+    --sidebar-background:          20 9% 4%;
+    --sidebar-foreground:          30 15% 95%;
+    --sidebar-primary:             15 60% 60%;
+    --sidebar-primary-foreground:  20 8% 5%;
+    --sidebar-accent:              20 7% 14%;
+    --sidebar-accent-foreground:   30 15% 95%;
+    --sidebar-border:              20 10% 16%;
+    --sidebar-ring:                15 60% 60%;
 
-    --gradient-hero:    linear-gradient(160deg, hsl(168 75% 44% / 0.12) 0%, transparent 60%);
-    --shadow-glow-teal: 0 0 40px hsl(168 75% 44% / 0.28), 0 0 12px hsl(168 75% 44% / 0.18);
-    --shadow-glow-gold: 0 0 28px hsl(40 53% 51% / 0.32), 0 0 10px hsl(40 53% 51% / 0.22);
-    --shadow-card:      0 4px 24px hsl(0 0% 0% / 0.45), 0 1px 0 hsl(0 0% 100% / 0.06), 0 0 0 1px hsl(218 16% 14% / 0.8);
+    --gradient-hero:    linear-gradient(160deg, hsl(15 60% 60% / 0.12) 0%, transparent 60%);
+    --shadow-glow-teal: 0 0 40px hsl(340 30% 58% / 0.26), 0 0 12px hsl(340 30% 58% / 0.16);
+    --shadow-glow-gold: 0 0 32px hsl(15 60% 60% / 0.34), 0 0 10px hsl(15 60% 60% / 0.22);
+    --shadow-card:      0 4px 24px hsl(0 0% 0% / 0.55), 0 1px 0 hsl(30 15% 95% / 0.04), 0 0 0 1px hsl(20 10% 16% / 0.9);
   }
 }
 
