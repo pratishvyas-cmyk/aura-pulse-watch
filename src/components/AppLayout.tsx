@@ -1,15 +1,19 @@
 // ── AppLayout — wraps all authenticated screens ───────────────────────────────
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { useTheme } from "next-themes";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BottomTabBar } from "@/components/BottomTabBar";
 import { useDeviceStore } from "@/store";
 import { BatteryPill } from "@/components/ui/BatteryPill";
 import { ConnectionBadge } from "@/components/ui/ConnectionBadge";
+import { Sun, Moon } from "lucide-react";
 
 export function AppLayout() {
   const device = useDeviceStore((s) => s.device);
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <SidebarProvider>
@@ -26,12 +30,27 @@ export function AppLayout() {
               <SidebarTrigger className="hidden md:flex text-muted-foreground hover:text-foreground" />
               <span className="text-xs text-muted-foreground md:hidden font-semibold tracking-widest">THEPUCK</span>
             </div>
-            {device && (
-              <div className="flex items-center gap-2">
-                <ConnectionBadge state={device.connection_state} />
-                <BatteryPill level={device.battery_level} />
-              </div>
-            )}
+
+            <div className="flex items-center gap-2">
+              {/* Theme toggle */}
+              <button
+                onClick={() => setTheme(isDark ? "light" : "dark")}
+                className="flex h-7 w-7 items-center justify-center rounded-lg border border-subtle bg-surface text-muted-foreground transition-colors hover:text-foreground"
+                aria-label="Toggle theme"
+              >
+                {isDark
+                  ? <Sun  className="h-3.5 w-3.5" />
+                  : <Moon className="h-3.5 w-3.5" />
+                }
+              </button>
+
+              {device && (
+                <>
+                  <ConnectionBadge state={device.connection_state} />
+                  <BatteryPill level={device.battery_level} />
+                </>
+              )}
+            </div>
           </header>
 
           {/* Page content */}
