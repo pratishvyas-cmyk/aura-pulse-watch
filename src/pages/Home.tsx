@@ -38,11 +38,10 @@ export default function HomePage() {
     stressLevel === "elevated" ? "hsl(var(--status-amber))" :
     "hsl(var(--status-red))";
 
-  const readinessColor: "red" | "amber" | "gold" | "green" =
+  const readinessColor: "red" | "blue" | "gold" =
     readinessScore < 34 ? "red" :
-    readinessScore < 60 ? "amber" :
-    readinessScore < 80 ? "gold" :
-    "green";
+    readinessScore < 80 ? "blue" :
+    "gold";
 
   const now = new Date();
   const greeting = now.getHours() < 12 ? "Good morning" : now.getHours() < 18 ? "Good afternoon" : "Good evening";

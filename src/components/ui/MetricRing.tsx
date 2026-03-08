@@ -104,8 +104,14 @@ export function MetricRing({
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span
-          className="font-bold text-foreground"
-          style={{ fontSize: size * 0.24, lineHeight: 1, letterSpacing: "-0.03em" }}
+          className="font-bold"
+          style={{
+            fontSize: size * 0.26,
+            lineHeight: 1,
+            letterSpacing: "-0.04em",
+            color: strokeColor,
+            textShadow: `0 0 20px ${glowColor}, 0 0 40px ${glowColor}`,
+          }}
         >
           {clamped}
         </span>
