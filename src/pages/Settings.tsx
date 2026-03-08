@@ -9,7 +9,7 @@ import { useUserStore, useDeviceStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall } from "lucide-react";
+import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon, ALargeSmall, Zap, Heart, Brain, TrendingUp, Moon as MoonIcon, Activity, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
@@ -159,21 +159,64 @@ export default function SettingsPage() {
       </div>
 
       {/* ── Subscription badge ── */}
-      <div className={cn(
-        "flex items-center gap-3 rounded-2xl border p-4",
-        isSubscribed ? "border-gold/30 bg-gold-dim" : "border-subtle bg-surface"
-      )}>
-        <Star className={cn("h-5 w-5 flex-shrink-0", isSubscribed ? "text-gold" : "text-muted-foreground")} />
-        <div>
-          <p className={cn("text-sm font-medium", isSubscribed ? "text-gold" : "text-foreground")}>
-            {isSubscribed ? "ThePuck Premium" : "Free plan"}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            {isSubscribed ? "All features unlocked" : "Upgrade for deeper analytics & export"}
-          </p>
+      {isSubscribed ? (
+        <div className="flex items-center gap-3 rounded-2xl border border-gold/30 bg-gold-dim p-4 shadow-glow-gold">
+          <Star className="h-5 w-5 flex-shrink-0 text-gold" />
+          <div>
+            <p className="text-sm font-bold text-gold">ThePuck Premium</p>
+            <p className="text-xs text-muted-foreground">All features unlocked</p>
+          </div>
         </div>
-        {!isSubscribed && <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />}
-      </div>
+      ) : (
+        <div className="relative overflow-hidden rounded-2xl border-2 border-gold/50 bg-gradient-to-br from-gold-dim via-surface to-surface shadow-glow-gold">
+          {/* Glow stripe */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-70" />
+
+          <div className="p-5 space-y-4">
+            {/* Header */}
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 shadow-glow-gold">
+                  <Star className="h-5 w-5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-base font-bold text-foreground">ThePuck Premium</p>
+                  <p className="text-xs text-muted-foreground">Unlock your full potential</p>
+                </div>
+              </div>
+              <span className="rounded-full bg-gold/20 border border-gold/40 px-2.5 py-0.5 text-[11px] font-bold text-gold uppercase tracking-wider">
+                Upgrade
+              </span>
+            </div>
+
+            {/* Feature list */}
+            <div className="grid grid-cols-1 gap-2">
+              {[
+                { icon: Activity,   label: "Recovery & Readiness scores",    desc: "Daily HRV-based recovery coaching" },
+                { icon: Heart,      label: "Advanced Heart Rate zones",       desc: "Real-time zone tracking + history" },
+                { icon: Brain,      label: "Stress & Strain analysis",        desc: "Cognitive + physical load tracking" },
+                { icon: MoonIcon,   label: "Sleep coaching",                  desc: "Deep, REM & light breakdown" },
+                { icon: TrendingUp, label: "Weekly & monthly trends",         desc: "Long-term health pattern insights" },
+                { icon: Download,   label: "Data export & reports",           desc: "CSV / JSON export anytime" },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="flex items-center gap-3 rounded-xl bg-surface/60 border border-subtle px-3 py-2.5">
+                  <Icon className="h-4 w-4 flex-shrink-0 text-gold" />
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-foreground truncate">{label}</p>
+                    <p className="text-[11px] text-muted-foreground truncate">{desc}</p>
+                  </div>
+                  <Lock className="ml-auto h-3 w-3 flex-shrink-0 text-muted-foreground/50" />
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <button className="w-full rounded-xl bg-gold py-3 text-sm font-bold text-background shadow-glow-gold transition-all active:scale-95 hover:opacity-90">
+              Upgrade to Premium
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Profile ── */}
       <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
