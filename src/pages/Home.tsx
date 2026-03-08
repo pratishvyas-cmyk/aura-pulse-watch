@@ -60,7 +60,7 @@ export default function HomePage() {
 
       {/* Readiness ring + metric chips */}
       <div className="flex items-center gap-4">
-        <MetricRing score={readinessScore} size={130} color="gold" label="Readiness" className="flex-shrink-0" />
+        <MetricRing score={readinessScore} size={130} color={readinessColor} label="Readiness" className="flex-shrink-0" />
         <div className="grid grid-cols-1 gap-2 flex-1">
           <MetricChip icon={<Heart className="h-4 w-4" />} value={liveHeartRate} unit="bpm" label="Heart rate" highlight pulse />
           <MetricChip icon={<Brain className="h-4 w-4" />} value={liveStress} label="Stress" className={stressLevel !== "calm" ? "border-status-amber/30" : ""} />
