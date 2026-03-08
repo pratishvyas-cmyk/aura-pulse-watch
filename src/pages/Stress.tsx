@@ -82,7 +82,7 @@ export default function StressPage() {
       {/* Two rings */}
       <div className="flex items-center justify-around">
         <div className="flex flex-col items-center gap-2">
-          <MetricRing score={readinessScore} size={120} color="gold" label="Readiness" sublabel="score" />
+          <MetricRing score={readinessScore} size={120} color={readinessScore < 34 ? "red" : readinessScore < 80 ? "blue" : "green"} label="Readiness" sublabel="score" />
           <p className="text-xs text-muted-foreground">
             {readinessScore >= 80 ? "Ready to perform" : readinessScore >= 60 ? "Moderate readiness" : "Rest recommended"}
           </p>
