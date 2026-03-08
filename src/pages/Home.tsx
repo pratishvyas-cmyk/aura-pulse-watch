@@ -8,9 +8,9 @@ import { StatBar } from "@/components/ui/StatBar";
 import { SparkLine } from "@/components/ui/SparkLine";
 import { useHealthStore, useUserStore, useDeviceStore } from "@/store";
 import { getStressLevel } from "@/types";
-import { generateHRTimeline, generateStressTimeline, lastNightSleep } from "@/lib/mockData";
+import { generateHRTimeline, generateStressTimeline, lastNightSleep, stepStreaks, weeklySteps } from "@/lib/mockData";
 import {
-  Heart, Brain, Activity, Footprints, Flame, Zap, Clock,
+  Heart, Brain, Activity, Footprints, Flame, Zap, Clock, Flame as FlameIcon, TrendingUp, Star,
 } from "lucide-react";
 import {
   AreaChart, Area, LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip, ReferenceLine,
@@ -25,7 +25,7 @@ const ACTIVE_GOAL  = 60;
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { liveHeartRate, liveHRV, liveStress, readinessScore, todaySteps, todayCalories, todayDistanceM, todayActiveMins } = useHealthStore();
+  const { liveHeartRate, liveHRV, liveStress, readinessScore, todaySteps, todayCalories, todayDistanceM, todayActiveMins, streakDays } = useHealthStore();
   const profile = useUserStore((s) => s.profile);
   const device  = useDeviceStore((s) => s.device);
 
@@ -46,6 +46,15 @@ export default function HomePage() {
   const now = new Date();
   const greeting = now.getHours() < 12 ? "Good morning" : now.getHours() < 18 ? "Good afternoon" : "Good evening";
 
+  // Streak dots from mock data
+  const currentStreak = stepStreaks.filter(Boolean).length;
+
+  // Readiness status message
+  const readinessMsg =
+    readinessScore >= 80 ? "You're primed to perform today." :
+    readinessScore >= 60 ? "Moderate readiness — pace yourself." :
+    "Low readiness — rest is recovery.";
+
   return (
     <Screen className="space-y-6">
       {/* Greeting */}
@@ -59,10 +68,51 @@ export default function HomePage() {
       {/* Readiness ring centered + metric row */}
       <div className="flex flex-col items-center gap-4">
         <MetricRing score={readinessScore} size={150} color={readinessColor} label="Readiness" className="flex-shrink-0" />
+        <p className="text-xs text-muted-foreground -mt-2">{readinessMsg}</p>
         <div className="grid grid-cols-3 gap-2 w-full">
           <MetricChip icon={<Heart className="h-4 w-4" />}    value={liveHeartRate} unit="bpm" label="Heart rate" color="red"   highlight pulse />
           <MetricChip icon={<Brain className="h-4 w-4" />}    value={liveStress}    label="Stress"     color={stressLevel === "calm" ? "green" : stressLevel === "elevated" ? "amber" : "red"} highlight />
           <MetricChip icon={<Activity className="h-4 w-4" />} value={liveHRV}       unit="ms" label="HRV" color="blue" highlight />
+        </div>
+      </div>
+
+      {/* Streaks & Milestones */}
+      <div className="rounded-2xl border border-subtle bg-surface p-4 shadow-card">
+        <SectionHeader title="Streaks & milestones" className="mb-3" />
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <FlameIcon className="h-5 w-5 text-status-amber" />
+            <div>
+              <p className="text-lg font-light text-foreground">{currentStreak} <span className="text-sm text-muted-foreground">day streak</span></p>
+              <p className="text-xs text-muted-foreground">Steps goal consistency</p>
+            </div>
+          </div>
+          <div className="flex gap-1">
+            {stepStreaks.map((hit, i) => (
+              <div key={i} className={cn(
+                "h-6 w-2 rounded-full transition-all",
+                hit ? "bg-status-amber" : "bg-border"
+              )} />
+            ))}
+          </div>
+        </div>
+
+        {/* Milestone chips */}
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { label: "Steps today", value: `${(todaySteps / 1000).toFixed(1)}k`, goal: todaySteps >= STEPS_GOAL, icon: Footprints },
+            { label: "Active mins", value: `${todayActiveMins}m`, goal: todayActiveMins >= ACTIVE_GOAL, icon: Activity },
+            { label: "This week",   value: `${currentStreak}/7`, goal: currentStreak >= 5, icon: TrendingUp },
+          ].map(({ label, value, goal, icon: Icon }) => (
+            <div key={label} className={cn(
+              "flex flex-col items-center gap-1 rounded-xl border py-2.5 px-2 text-center",
+              goal ? "border-status-green/25 bg-status-green/5" : "border-subtle bg-surface-raised"
+            )}>
+              <Icon className={cn("h-3.5 w-3.5", goal ? "text-status-green" : "text-muted-foreground")} />
+              <span className="text-sm font-semibold text-foreground">{value}</span>
+              <span className="text-[10px] text-muted-foreground">{label}</span>
+            </div>
+          ))}
         </div>
       </div>
 

@@ -1,7 +1,8 @@
-// ── Gestures & Haptics ────────────────────────────────────────────────────────
+// ── Gestures & Haptics (Premium) ──────────────────────────────────────────────
 import React, { useEffect, useState } from "react";
 import { Screen } from "@/components/ui/Screen";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { PremiumGate } from "@/components/ui/PremiumGate";
 import { useGestureStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
@@ -55,7 +56,7 @@ const PATTERN_LABELS: Record<HapticPattern, string> = {
 const ALL_ACTIONS: GestureAction[] = ["call_accept", "call_reject", "music_play_pause", "music_next", "music_prev", "mark_stress", "none"];
 const ALL_PATTERNS: HapticPattern[] = ["single", "double", "long", "pattern_sos"];
 
-export default function GesturesPage() {
+function GestureContent() {
   const { user } = useAuth();
   const { gestures, hapticProfiles, setGestures, updateGesture, setHapticProfiles, updateHaptic } = useGestureStore();
   const [actionOpen, setActionOpen] = useState<string | null>(null);
@@ -86,12 +87,7 @@ export default function GesturesPage() {
   }
 
   return (
-    <Screen className="space-y-6">
-      <div>
-        <p className="text-xs text-muted-foreground uppercase tracking-widest">Configure</p>
-        <h1 className="mt-0.5 text-xl font-light text-foreground">Gestures & Haptics</h1>
-      </div>
-
+    <>
       {/* Gestures */}
       <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
         <div className="px-4 pt-4 pb-2">
@@ -164,7 +160,6 @@ export default function GesturesPage() {
 
               {h.enabled && (
                 <>
-                  {/* Pattern */}
                   <div className="flex gap-1.5">
                     {ALL_PATTERNS.map((p) => (
                       <button
@@ -180,7 +175,6 @@ export default function GesturesPage() {
                     ))}
                   </div>
 
-                  {/* Intensity slider */}
                   <div>
                     <div className="flex justify-between mb-1">
                       <span className="text-xs text-muted-foreground">Intensity</span>
@@ -198,6 +192,24 @@ export default function GesturesPage() {
           ))}
         </div>
       </div>
+    </>
+  );
+}
+
+export default function GesturesPage() {
+  return (
+    <Screen className="space-y-6">
+      <div>
+        <p className="text-xs text-muted-foreground uppercase tracking-widest">Configure</p>
+        <h1 className="mt-0.5 text-xl font-light text-foreground">Gestures & Haptics</h1>
+      </div>
+
+      <PremiumGate
+        feature="Gesture & Haptic configuration"
+        description="Customise your puck's wrist gestures and haptic feedback patterns with Premium."
+      >
+        <GestureContent />
+      </PremiumGate>
     </Screen>
   );
 }
