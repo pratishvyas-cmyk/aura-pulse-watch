@@ -1,5 +1,6 @@
 // ── Device & Account Settings ─────────────────────────────────────────────────
 import React, { useState } from "react";
+import { useTheme } from "next-themes";
 import { Screen } from "@/components/ui/Screen";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
@@ -8,13 +9,14 @@ import { useUserStore, useDeviceStore } from "@/store";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { User, Shield, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight } from "lucide-react";
+import { User, Download, Trash2, LogOut, Star, Cpu, Wifi, ChevronRight, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth();
   const { profile, updateProfile, isSubscribed, shareAnalytics, shareHealthData, setShareAnalytics, setShareHealthData } = useUserStore();
   const device = useDeviceStore((s) => s.device);
+  const { theme, setTheme } = useTheme();
   const [name, setName] = useState(profile?.display_name ?? "");
   const [saving, setSaving] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -60,10 +62,12 @@ export default function SettingsPage() {
       <span className="text-sm text-foreground">{label}</span>
       <label className="relative inline-flex cursor-pointer items-center">
         <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="sr-only peer" />
-        <div className="h-5 w-9 rounded-full bg-border peer-checked:bg-teal transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-background after:transition-all peer-checked:after:translate-x-4" />
+        <div className="h-5 w-9 rounded-full bg-border peer-checked:bg-primary transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-background after:transition-all peer-checked:after:translate-x-4" />
       </label>
     </div>
   );
+
+  const isDark = theme === "dark";
 
   return (
     <Screen className="space-y-6">
@@ -72,7 +76,52 @@ export default function SettingsPage() {
         <h1 className="mt-0.5 text-xl font-light text-foreground">Settings</h1>
       </div>
 
-      {/* Subscription badge */}
+      {/* ── Appearance ── */}
+      <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
+        <div className="px-4 pt-4 pb-2">
+          <SectionHeader title="Appearance" />
+        </div>
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {isDark
+                ? <Moon className="h-4 w-4 text-muted-foreground" />
+                : <Sun  className="h-4 w-4 text-muted-foreground" />
+              }
+              <span className="text-sm text-foreground">{isDark ? "Dark mode" : "Light mode"}</span>
+            </div>
+            {/* Segmented toggle */}
+            <div className="flex rounded-xl border border-subtle bg-surface-raised p-0.5 gap-0.5">
+              <button
+                onClick={() => setTheme("light")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all",
+                  !isDark
+                    ? "bg-surface text-foreground shadow-sm border border-subtle"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Sun className="h-3 w-3" />
+                Light
+              </button>
+              <button
+                onClick={() => setTheme("dark")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all",
+                  isDark
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Moon className="h-3 w-3" />
+                Dark
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Subscription badge ── */}
       <div className={cn(
         "flex items-center gap-3 rounded-2xl border p-4",
         isSubscribed ? "border-gold/30 bg-gold-dim" : "border-subtle bg-surface"
@@ -89,7 +138,7 @@ export default function SettingsPage() {
         {!isSubscribed && <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />}
       </div>
 
-      {/* Profile */}
+      {/* ── Profile ── */}
       <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
         <div className="px-4 pt-4 pb-2">
           <SectionHeader title="Profile" />
@@ -102,49 +151,49 @@ export default function SettingsPage() {
                 value={name} onChange={(e) => setName(e.target.value)}
                 className="flex-1 rounded-xl border border-subtle bg-surface-raised px-3 py-2 text-sm text-foreground outline-none focus:border-primary/60"
               />
-              <button onClick={saveProfile} disabled={saving} className="rounded-xl bg-teal px-3 py-2 text-sm text-background font-medium disabled:opacity-50">
+              <button onClick={saveProfile} disabled={saving} className="rounded-xl bg-primary px-3 py-2 text-sm text-primary-foreground font-medium disabled:opacity-50">
                 {saving ? "…" : "Save"}
               </button>
             </div>
           </div>
           <Row icon={User} label="Email" value={user?.email ?? "—"} />
-          <Row icon={User} label="Units" value={profile?.units ?? "metric"} />
+          <Row icon={User} label="Units"  value={profile?.units ?? "metric"} />
         </div>
       </div>
 
-      {/* Device */}
+      {/* ── Device ── */}
       {device && (
         <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
           <div className="px-4 pt-4 pb-2">
             <SectionHeader title="Device" />
           </div>
           <div className="divide-y divide-border px-4">
-            <Row icon={Cpu} label="Model" value={device.model} />
-            <Row icon={Cpu} label="Firmware" value={device.firmware_version} />
-            <Row icon={Cpu} label="Serial" value={device.serial_number ?? "TPK-2024-A4B7"} />
-            <Row icon={Wifi} label="Status" value={device.connection_state} />
+            <Row icon={Cpu}  label="Model"    value={device.model} />
+            <Row icon={Cpu}  label="Firmware" value={device.firmware_version} />
+            <Row icon={Cpu}  label="Serial"   value={device.serial_number ?? "TPK-2024-A4B7"} />
+            <Row icon={Wifi} label="Status"   value={device.connection_state} />
           </div>
         </div>
       )}
 
-      {/* Privacy */}
+      {/* ── Privacy ── */}
       <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
         <div className="px-4 pt-4 pb-2">
           <SectionHeader title="Privacy" />
         </div>
         <div className="divide-y divide-border px-4">
-          <Toggle label="Share analytics" checked={shareAnalytics} onChange={setShareAnalytics} />
+          <Toggle label="Share analytics"              checked={shareAnalytics}  onChange={setShareAnalytics}  />
           <Toggle label="Share health data for research" checked={shareHealthData} onChange={setShareHealthData} />
         </div>
       </div>
 
-      {/* Data controls */}
+      {/* ── Data controls ── */}
       <div className="rounded-2xl border border-subtle bg-surface shadow-card overflow-hidden">
         <div className="px-4 pt-4 pb-2">
           <SectionHeader title="Data" />
         </div>
         <div className="divide-y divide-border px-4">
-          <button onClick={exportData} className="flex w-full items-center gap-3 py-3 text-sm text-foreground hover:text-teal transition-colors">
+          <button onClick={exportData} className="flex w-full items-center gap-3 py-3 text-sm text-foreground hover:text-primary transition-colors">
             <Download className="h-4 w-4 text-muted-foreground" />
             Export all data
           </button>
@@ -155,12 +204,12 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Sign out */}
+      {/* ── Sign out ── */}
       <GhostButton onClick={signOut} icon={<LogOut className="h-4 w-4" />} className="w-full">
         Sign out
       </GhostButton>
 
-      {/* Delete confirm modal */}
+      {/* ── Delete confirm modal ── */}
       {showDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm px-4">
           <div className="w-full max-w-sm rounded-2xl border border-subtle bg-surface p-6 shadow-card space-y-4">
@@ -171,7 +220,7 @@ export default function SettingsPage() {
             <p className="text-xs text-muted-foreground">This permanently removes all recorded health readings. Your account and settings remain intact.</p>
             <div className="flex gap-2">
               <GhostButton onClick={() => setShowDelete(false)} className="flex-1">Cancel</GhostButton>
-              <button onClick={deleteAllData} className="flex-1 rounded-xl bg-status-red px-4 py-2 text-sm font-semibold text-background">Delete</button>
+              <button onClick={deleteAllData} className="flex-1 rounded-xl bg-status-red px-4 py-2 text-sm font-semibold text-primary-foreground">Delete</button>
             </div>
           </div>
         </div>
