@@ -26,7 +26,7 @@ export default function HeartPage() {
       {/* Live HR */}
       <div className="flex items-center gap-5 rounded-2xl border border-subtle bg-surface p-5 shadow-card">
         <div className="relative flex-shrink-0">
-          <Heart className="h-16 w-16 text-teal animate-pulse-beat" fill="hsl(var(--primary-dim))" />
+          <Heart className="h-16 w-16 animate-pulse-beat" style={{ color: "hsl(var(--status-red))", filter: "drop-shadow(0 0 10px hsl(var(--status-red) / 0.7))" }} fill="hsl(var(--status-red) / 0.15)" />
         </div>
         <div>
           <p className="text-xs text-muted-foreground uppercase tracking-widest">Live heart rate</p>
