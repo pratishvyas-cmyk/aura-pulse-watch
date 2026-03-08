@@ -17,7 +17,7 @@ export function BottomTabBar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-subtle backdrop-blur-xl md:hidden" style={{ background: "hsl(var(--sidebar-background) / 0.88)" }}>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-subtle bg-sidebar/95 backdrop-blur-md md:hidden">
       <div className="flex items-center justify-around px-2 pb-safe">
         {TABS.map(({ label, path, icon: Icon }) => {
           const active = location.pathname === path;

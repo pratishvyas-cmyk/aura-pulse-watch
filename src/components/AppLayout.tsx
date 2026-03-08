@@ -31,7 +31,7 @@ export function AppLayout() {
 
         <div className="flex flex-1 flex-col min-w-0">
           {/* Top header */}
-          <header className="flex h-12 items-center justify-between border-b border-subtle backdrop-blur-md px-4 md:px-6" style={{ background: "hsl(var(--background) / 0.75)" }}>
+          <header className="flex h-12 items-center justify-between border-b border-subtle bg-background/80 backdrop-blur-sm px-4 md:px-6">
             <div className="flex items-center gap-2">
               <SidebarTrigger className="hidden md:flex text-muted-foreground hover:text-foreground" />
               <span className="text-xs text-muted-foreground md:hidden font-semibold tracking-widest">THEPUCK</span>
